@@ -1,47 +1,44 @@
-import { Talent, talents } from "./talents";
-import { Skill, skills, Trained, Descriptor, Type } from "./skills";
+import { Talent, talents } from "./talents.js";
+import { Skill, skills, Trained, Descriptor, Type } from "./skills.js";
+import { HOMEWORLDS, BIRTHRIGHT, LUREOFTHEVOID, TRIALSANDTRAVAILS, MOTIVATION, CAREERPATH } from "./originPath.js";
+import { Dice } from "./dice.js";
 
 class Character {
-    constructor(
-        playerName,
-        characterName, 
-        careerPath,
-        motivation, 
-        description, 
-        weapons,
-        gear,
-        acquisitions,
-        mutations,
-        armour,
-    ) {
-        this.playerName = playerName;
-        this.characterName = characterName;
-        this.careerPath = careerPath;
+    constructor() {
+        this.playerName = null;
+        this.characterName = null;
+        this.homeWorld = null;
+        this.birthright = null;
+        this.lotv = null;
+        this.tat = null;
+        this.motivation = null;
+        this.careerPath = null;
         this.rank = 0;
-        this.motivation = motivation;
-        this.description = description;
+        this.motivation = null;
+        this.description = null;
         this.characteristics = {
-            'ws': 0,
-            'bs': 0,
-            's': 0,
-            't': 0,
-            'ag': 0,
-            'int': 0,
-            'per': 0,
-            'wp': 0,
-            'fel': 0
+            'WS': 0,
+            'BS': 0,
+            'S': 0,
+            'T': 0,
+            'Ag': 0,
+            'Int': 0,
+            'Per': 0,
+            'WP': 0,
+            'Fel': 0
         };
         this.skills = skills;
         this.talentsTraits = [];
         this.specialAbilities = [];
         this.psychicDisciplines = [];
         this.psychicTechniques = [];
-        this.exp = 4500;
+        this.totalExp = 4500;
+        this.expToSpend = 0;
         this.movement = {};
-        this.weapons = weapons;
-        this.gear = gear;
-        this.acquisitions = acquisitions;
-        this.mutations = mutations;
+        this.weapons = [];
+        this.gear = [];
+        this.acquisitions = [];
+        this.mutations = [];
         this.corruption = {
             currentCorruption: 0,
             degree: null,
@@ -58,7 +55,14 @@ class Character {
             degree: null,
             disorders: null
         };
-        this.armour = armour;
+        this.armour = {
+            head: 0,
+            rightArm: 0,
+            leftArm: 0,
+            body: 0,
+            rightLeg: 0,
+            leftLeg: 0
+        };
         this.lifting = {
             lift: 0,
             carry: 0,
@@ -71,27 +75,76 @@ class Character {
     }
 
     generateCharacteristics() {
-        let dTen = new Dice(10);
+        let dTen = new Dice(10, 25);
         for (let key in this.characteristics) {
-            this.characteristics[key] = dTen.rollDie(2) + 25
+            this.characteristics[key] = dTen.rollDie(2);
         }
     }
 
-    generateHomeWorld() {
-
-    }
-}
-
-class Dice {
-    constructor(faces) {
-        this.faces = faces;
-    }
-
-    rollDie(x) {
-        let result = 0;
-        for (let i = 0; i < x; i++) {
-            result += Math.floor(Math.random() * this.faces) + 1;
+    findLowestCharacteristic() {
+        let lowestChar = null;
+        let lowestValue = Infinity;
+        for (let key in this.characteristics) {
+            if (this.characteristics[key] < lowestValue) {
+                lowestValue = this.characteristics[key];
+                lowestChar = key;
+            }
         }
-        return result
+        return lowestChar;
+    }
+
+    findLowestCharacteristics() {
+        let lowestChar = this.findLowestCharacteristic();
+        let lowestValue = this.characteristics[lowestChar];
+        let lowestChars = [lowestChar];
+        for (let key in this.characteristics) {
+            if (key !== lowestChar && this.characteristics[key] === lowestValue) {
+                lowestChars.push(key);
+            }
+        }
+        return lowestChars;
+    }
+    
+    rerollCharacteristic(characteristic) {
+        let dTen = new Dice(10, 25);
+        this.characteristics[characteristic] = dTen.rollDie(2);
+    }
+
+    randomizeHomeWorld() {
+        this.homeWorld = HOMEWORLDS[Math.floor(Math.random() * HOMEWORLDS.length)];
+    }
+
+    randomizeBirthright() {
+        this.birthright = BIRTHRIGHT[Math.floor(Math.random() * BIRTHRIGHT.length)];
+    }
+
+    randomizeLOTV() {
+        this.lotv = LUREOFTHEVOID[Math.floor(Math.random() * LUREOFTHEVOID.length)];
+    }
+
+    randomizeTAT() {
+        this.tat = TRIALSANDTRAVAILS[Math.floor(Math.random() * TRIALSANDTRAVAILS.length)];
+    }
+
+    randomizeMotivation() {
+        this.motivation = MOTIVATION[Math.floor(Math.random() * MOTIVATION.length)];
+    }
+
+    randomizeCareerPath() {
+        this.careerPath = CAREERPATH[Math.floor(Math.random() * CAREERPATH.length)];
+    }
+
+    randomizeOriginPath() {
+        this.randomizeHomeWorld();
+        this.randomizeBirthright();
+        this.randomizeLOTV();
+        this.randomizeTAT();
+        this.randomizeMotivation();
+        this.randomizeCareerPath();
     }
 }
+
+let player = new Character();
+player.generateCharacteristics();
+player.randomizeOriginPath();
+console.log(player);

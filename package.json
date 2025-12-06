@@ -1,0 +1,6 @@
+{
+  "type": "module",
+  "name": "character-generator",
+  "version": "1.0.0",
+  "description": "Character Generator for Warhammer 40k Rogue Trader"
+}
