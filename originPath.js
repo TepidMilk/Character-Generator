@@ -1,4 +1,6 @@
 import { Dice } from "./dice.js";
+import { Skill } from "./skills";
+import { Talent } from "./talents.js";
 
 class HomeWorld {
     constructor(name, charMods, skills, wounds) {
@@ -10,7 +12,12 @@ class HomeWorld {
     }
 }
 
-
+class Birthright {
+    constructor(name, talents, charBonuses, drawbacks) {
+        this.name = name;
+    
+    }
+}
 
 const HOMEWORLDS = [
     new HomeWorld('Death World', {'S': 5, 'T': 5, 'WP': -5, 'Fel': -5}, ['Survival'], new Dice(5, 2)),
@@ -22,9 +29,10 @@ const HOMEWORLDS = [
 ];
 
 const BIRTHRIGHT = [
-    'Scavenger',
-    'Scapegrace',
+    // TODO: Talent new Birthright('Scavenger', [] , [{'Ag': 3}, {'WP': 3}], [{type: 'Corruption', value: new Dice(5)}, {type: 'Insanity', value: new Dice(5)}]),
+    new Birthright('Scapegrace', 'Sleight of Hand', [{'Int': 3}, {'Per': 3}], [{type: 'Corruption', value: new Dice(5)}, {type: 'Insanity', value: new Dice(5)}]),
     'Stubjack',
+    // new Birthright('Stubjack')
     'Child of the Creed',
     'Savant',
     'Vaunted'
@@ -71,3 +79,4 @@ const CAREERPATH = [
 export {CAREERPATH, MOTIVATION, TRIALSANDTRAVAILS, HOMEWORLDS, LUREOFTHEVOID, BIRTHRIGHT};
 
 console.log('HOMEWORLDS:', HOMEWORLDS);
+
