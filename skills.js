@@ -1,11 +1,11 @@
-export const Trained = Object.freeze({
+export const TRAINED = Object.freeze({
     UNTRAINED: 0,
     TRAINED: 1,
     EXPERT: 2,
     MASTERY: 3
 })
 
-export const Descriptor = Object.freeze({
+export const DESCRIPTOR = Object.freeze({
     MOVEMENT: "Movement",
     CRAFTING: "Crafting",
     EXPLORATION: "Exploration",
@@ -14,7 +14,7 @@ export const Descriptor = Object.freeze({
     OPERATOR: "Operator",
 })
 
-export const Category = Object.freeze({
+export const CATEGORY = Object.freeze({
     BASIC: 'Basic',
     ADVANCED: 'Advanced'
 })
@@ -151,3 +151,7 @@ export let skills = [
     new Skill('Wrangling', Category.ADVANCED, 'Int', null, null),
 ]
 
+let skillMap = skills.reduce((map, skill) => {
+    map[skill.name] = skill;
+    return map;
+}, {});

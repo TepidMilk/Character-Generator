@@ -249,3 +249,8 @@ export let talents = [
     new Talent('Whispers', {'Int': 40, 'Fel': 30}, null, null, null, 'Provides Bonuses to Investigations.'),
     new Talent('Wrath of the Righteous', null, null, ['Pure Faith'], null, "Spend a Fate Point to deal extra Damage."),
 ]
+
+let talentMap = talents.reduce((map, talent) => {
+    map[talent.name] = talent;
+    return map;
+}, {});

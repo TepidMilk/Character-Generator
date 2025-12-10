@@ -33,7 +33,7 @@ class Character {
         this.psychicDisciplines = [];
         this.psychicTechniques = [];
         this.totalExp = 4500;
-        this.expToSpend = 0;
+        this.expToSpend = 500;
         this.movement = {};
         this.weapons = [];
         this.gear = [];
@@ -75,9 +75,9 @@ class Character {
     }
 
     generateCharacteristics() {
-        let dTen = new Dice(10, 25);
+        let dTen = new Dice(1, 10, 25);
         for (let key in this.characteristics) {
-            this.characteristics[key] = dTen.rollDie(2);
+            this.characteristics[key] = dTen.rollDie();
         }
     }
 
@@ -106,8 +106,8 @@ class Character {
     }
     
     rerollCharacteristic(characteristic) {
-        let dTen = new Dice(10, 25);
-        this.characteristics[characteristic] = dTen.rollDie(2);
+        let dTen = new Dice(2, 10, 25);
+        this.characteristics[characteristic] = dTen.rollDie();
     }
 
     randomizeHomeWorld() {
