@@ -15,7 +15,7 @@ class Character {
         this.careerPath = null;
         this.rank = 0;
         this.motivation = null;
-        this.description = null;
+        this.description = '';
         this.characteristics = {
             'WS': 0,
             'BS': 0,
@@ -41,8 +41,8 @@ class Character {
         this.mutations = [];
         this.corruption = {
             currentCorruption: 0,
-            degree: null,
-            Malignancies: null
+            degree: '',
+            Malignancies: ''
         };
         this.wounds = {
             totalWounds: 0,
@@ -52,16 +52,16 @@ class Character {
         };
         this.insanity = {
             currentInsanity: 0,
-            degree: null,
-            disorders: null
+            degree: '',
+            disorders: ''
         };
         this.armour = {
-            head: 0,
-            rightArm: 0,
-            leftArm: 0,
-            body: 0,
-            rightLeg: 0,
-            leftLeg: 0
+            head: null,
+            rightArm: null,
+            leftArm: null,
+            body: null,
+            rightLeg: null,
+            leftLeg: null
         };
         this.lifting = {
             lift: 0,
